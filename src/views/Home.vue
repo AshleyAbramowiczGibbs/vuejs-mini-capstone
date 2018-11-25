@@ -41,12 +41,15 @@
 
       </div>
       <h1>Search for A Dress</h1>
+      <div>
+        <button v-on:click="setSortAttribute('name')" class="btn btn-primary btn-lg">Sort by Name</button>
+      </div>
       <input type="text" v-model="searchFilter" list="names">
       <datalist id="names">
         <option v-for="product in products">{{ product.name }}</option>
       </datalist>
       <div class="row">
-        <div v-for="product in filterBy(products, searchFilter, 'name', 'description')" class="col-md-4 mb-2">
+        <div v-for="product in orderBy(filterBy(products, searchFilter, 'name'), sortAttribute, sortOrder)" class="col-md-4 mb-2">
           <div class="card">
             <img
               class="card-img-top"
@@ -100,7 +103,9 @@ export default {
       newProductCondition: "",
       newProductOriginalPrice: "",
       newProductSellingPrice: "",
-      searchFilter: ""
+      searchFilter: "",
+      sortAttribute: "name",
+      sortOrder: 1
     };
   },
   created: function() {
@@ -118,6 +123,14 @@ export default {
       } else {
         return "https://cdn7.bigcommerce.com/s-yd0nd8/images/stencil/1280x1280/products/169/5820/Revelry_074__56124.1540512985.jpg?c=2&imbypass=on";
       }
+    },
+    setSortAttribute: function(inputAttribute) {
+      if (this.sortOrder === 1) {
+        this.sortOrder = -1;
+      } else {
+        this.sortOrder = 1;
+      }
+      this.sortAttribute = inputAttribute;
     },
     addDress: function() {
       console.log("add a dress!!!!");
