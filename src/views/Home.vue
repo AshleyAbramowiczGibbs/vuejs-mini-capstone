@@ -41,7 +41,10 @@
 
       </div>
       <h1>Search for A Dress</h1>
-      <input type="text" v-model="searchFilter">
+      <input type="text" v-model="searchFilter" list="names">
+      <datalist id="names">
+        <option v-for="product in products">{{ product.name }}</option>
+      </datalist>
       <div class="row">
         <div v-for="product in filterBy(products, searchFilter, 'name', 'description')" class="col-md-4 mb-2">
           <div class="card">
